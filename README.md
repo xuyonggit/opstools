@@ -1,7 +1,11 @@
-# opstools
-mysql 使用
+# 运维工具库
+### 包含：
+* #### 封装mysql
+## 安装
+pip install git+https://github.com/xuyonggit/opstools.git
+#### 封装mysql
 ```
-from Base.mysql_api import BaseMysql
+from opstools.Base.mysql_api import BaseMysql
 
 
 class TestMysql(BaseMysql):
