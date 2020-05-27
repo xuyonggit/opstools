@@ -25,17 +25,17 @@ class WechatApp(object):
             return False, ('msg_type_error:{},available:{}'.format(msg_type, ",".join([str(k) for k in self.available_msg_type])))
 
         for user in to_users_list:
-            user = str(user).decode('utf-8')
+            user = str(user)
             if user not in self.allow_users:
                 return False, ('to_users_list_error: {}, available: {}'.format(user, ','.join([str(k) for k in self.allow_users.keys()])))
 
         for part in to_group_list:
-            part = str(part).decode('utf-8')
+            part = str(part)
             if part not in self.allow_parts:
                 return False, ('to_group_list_error: {}, available: {}'.format(part, ','.join([str(k) for k in self.allow_parts.keys()])))
 
-        to_users_list = [str(self.allow_users[str(user).decode('utf-8')]) for user in to_users_list]
-        to_group_list = [str(self.allow_parts[str(group).decode('utf-8')]) for group in to_group_list]
+        to_users_list = [str(self.allow_users[str(user)]) for user in to_users_list]
+        to_group_list = [str(self.allow_parts[str(group)]) for group in to_group_list]
         if msg_type == 'text':
             return True, self.send_text(to_users_list=to_users_list, to_group_list=to_group_list, msg_string=msg_string)
         elif msg_type == 'markdown':
@@ -59,7 +59,7 @@ class WechatApp(object):
                 }
             )
             for k in response['department']:
-                self.allow_parts[str(k['name']).decode('utf-8')] = int(k['id'])
+                self.allow_parts[str(k['name'])] = int(k['id'])
 
     def get_users_info(self):
         for k, pid in self.allow_parts.items():
@@ -71,7 +71,7 @@ class WechatApp(object):
                 }
             )
             for user in response['userlist']:
-                self.allow_users[str(user['name']).decode('utf-8')] = user['userid']
+                self.allow_users[str(user['name'])] = user['userid']
         for user in self.app_info['allow_userinfos'].get('user', []):
             response = self.api.httpCall(
                 CORP_API_TYPE['USER_GET'],
@@ -80,7 +80,7 @@ class WechatApp(object):
                 }
             )
             name = response.get('name')
-            self.allow_users[str(name).decode('utf-8')] = user['userid']
+            self.allow_users[str(name)] = user['userid']
 
     def send_text(self, to_users_list=[], to_group_list=[], msg_string=""):
         response = self.api.httpCall(
@@ -110,9 +110,26 @@ class WechatApp(object):
                 'msgtype': 'markdown',
                 'climsgid': 'climsgidclimsgid_%f' % (random.random()),
                 "markdown": {
-                    "content": str(markdown).decode('utf-8')
+                    "content": str(markdown)
                 },
                 'safe': 0,
             }
         )
         return response
+
+
+class WechatApi(object):
+    def __init__(self, config):
+        self.config = config
+        self.NAME = config['NAME']
+        self.CORP_ID = config['CORP_ID']
+        self.APP_LIST_CONFIG = config['APP_LIST']
+        self.apps = {}
+        self.trans = {}
+        self.init_apps()
+
+    def init_apps(self):
+        for k, v in self.APP_LIST_CONFIG.items():
+            if v.get('switch') != 'on': continue
+            app = WechatApp(self.CORP_ID, v['APP_ID'], v['APP_SECRET'])
+            self.apps[k] = app

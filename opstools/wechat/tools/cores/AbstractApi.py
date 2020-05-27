@@ -81,6 +81,29 @@ class AbstractApi(object):
         elif 'ACCESS_TOKEN' in url:
             self.refreshAccessToken()
 
+    @staticmethod
+    def __checkResponse(response):
+        errCode = response.get('errcode')
+        errMsg = response.get('errmsg')
+
+        if errCode is 0:
+            return response
+        else:
+            print(errCode, errMsg)
+            raise ApiException(errCode, errMsg)
+
+    @staticmethod
+    def __appendArgs(url, args):
+        if args is None:
+            return url
+
+        for key, value in args.items():
+            if '?' in url:
+                url += ('&' + key + '=' + value)
+            else:
+                url += ('?' + key + '=' + value)
+        return url
+
     def httpCall(self, urlType, args=None):
         shortUrl = urlType[0]
         method = urlType[1]
@@ -91,7 +114,7 @@ class AbstractApi(object):
                 response = self.__httpPost(url, args)
             elif 'GET' == method:
                 url = self.__makeUrl(shortUrl)
-                url = self.__appendToken(url)
+                url = self.__appendArgs(url, args)
                 response = self.__httpGet(url)
             else:
                 raise ApiException(-1, "unknown method type")
@@ -103,5 +126,5 @@ class AbstractApi(object):
             else:
                 break
 
-
+        return self.__checkResponse(response)
 
