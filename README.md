@@ -1,4 +1,3 @@
-[TOC]
 # 运维工具库
 ### 安装
 pip install git+https://github.com/xuyonggit/opstools.git
