@@ -1,8 +1,4 @@
 # 运维工具库
-### 包含：
-* #### 封装mysql
-* #### 封装企业微信接口
-* #### 封装发送邮件接口
 ### 安装
 pip install git+https://github.com/xuyonggit/opstools.git
 ### 封装mysql
