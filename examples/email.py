@@ -1,8 +1,18 @@
 # -*- coding: utf-8 -*-
 from opstools.email.tools.Coreapi import EmailApi
 CONFIG = {
-    # 组
-    'test1': {
+    # 组 支持多个组
+    '业务报警组': {
+        'name': '',         # 组名 即邮件主题
+        'user': '',         # 发件人
+        'alias': '',        # 发件人别名 可为空
+        'password': '',     # 发件人密码
+        'smtp': '',         # smtp服务器
+        'port': 25,
+        'to_list': ['xuyong1@wps.cn'],      # 收件人列表
+        'cc_list': []       # 抄送列表
+    },
+    '大数据报警组': {
         'name': '',         # 组名 即邮件主题
         'user': '',         # 发件人
         'alias': '',        # 发件人别名 可为空
@@ -15,7 +25,7 @@ CONFIG = {
 }
 
 if __name__ == '__main__':
-    ea = EmailApi(CONFIG).apps['test1']
+    ea = EmailApi(CONFIG).apps['业务报警组']     # 组名
     # 添加文本
     ea.add_str('lalala')
     # 添加图片
@@ -25,4 +35,7 @@ if __name__ == '__main__':
     # 添加附件
     ea.add_attr("C:\\Users\\xu's\\PycharmProjects\\opstools\\examples\\wechat.py")
     status, res = ea.send_email()
-    print(res)
+    if status:
+        print('success')
+    else:
+        print('error: {}'.format(res))
