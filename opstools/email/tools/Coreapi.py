@@ -35,30 +35,32 @@ class EmailTools(object):
         self.str = """<html>
         <head>
         <style type="text/css">
-            #table-6 thead th {
-            background-color: rgb(128, 102, 160);
-            color: #fff;
-            border-bottom-width: 0;
-            }
-            
-            /* Column Style */
-            #table-6 td {
-            color: #000;
-            }
-            /* Heading and Column Style */
-            #table-6 tr, #table-6 th {
-            border-width: 1px;
-            border-style: solid;
-            border-color: rgb(128, 102, 160);
-            }
-            
-            /* Padding and font style */
-            #table-6 td, #table-6 th {
-            padding: 5px 10px;
-            font-size: 12px;
-            font-family: Verdana;
-            font-weight: bold;
-            }</style></head>
+            #table-1
+        {
+            border-collapse: collapse;
+            margin: 0 auto;
+            text-align: center;
+        }
+        #table-1  td, #table-1  th
+        {
+            border: 1px solid #cad9ea;
+            color: #666;
+            height: 30px;
+        }
+        #table-1  thead th
+        {
+            background-color: #CCE8EB;
+            width: 100px;
+        }
+        #table-1  tr:nth-child(odd)
+        {
+            background: #fff;
+        }
+        #table-1  tr:nth-child(even)
+        {
+            background: #F5FAFA;
+        }
+    </style></head>
         """
 
 
@@ -89,14 +91,19 @@ class EmailTools(object):
         """
         self.attr.append(attr)
 
-    def add_table(self, data):
+    def add_table(self, data, **kwargs):
         """
         添加表格
         :param: data 表格数据 格式：[[1, 2, 3, 4], [a, b, c, d]]
+        :param: title 表格标题  非必须
         :return:
         """
-        msg = """<table id="table-6">"""
+        title = kwargs['title'] if 'title' in kwargs.keys() else None
+
+        msg = """<table width="100%" id="table-1">"""
         if not isinstance(data, list): raise TypeError ("data must be [ list ], give {}".format(type(data)))
+        if title:
+            msg += """<caption> <h2> {} </h2></caption>""".format(title)
         for i in data:
             msg += """<tr>"""
             for d in i:
@@ -148,7 +155,6 @@ class EmailTools(object):
             for file in self.attr:
                 i = self.__get_file(file)
                 msgAlternative.attach(i)
-        print(self.str)
         try:
             smtp_obj = SMTP(self.SMTP, self.PORT)
             smtp_obj.connect(self.SMTP, self.PORT)
@@ -157,10 +163,6 @@ class EmailTools(object):
             return True, "邮件发送成功"
         except SMTPException as e:
             return False, "邮件发送失败: {}".format(e)
-
-
-
-
 
 
 class EmailApi(object):
