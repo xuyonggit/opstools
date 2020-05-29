@@ -66,7 +66,7 @@ CONFIG = {
         'alias': '',        # 发件人别名 可为空
         'password': '',     # 发件人密码
         'smtp': '',         # smtp服务器
-        'port': 25,
+        'port': 25,          # 端口，决定是否使用ssl加密发送25 非加密 465 加密，系统自动判定
         'to_list': ['xuyong1@wps.cn'],      # 收件人列表
         'cc_list': []       # 抄送列表
     }

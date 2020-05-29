@@ -162,14 +162,26 @@ class EmailTools(object):
             for file in self.attr:
                 i = self.__get_file(file)
                 msgAlternative.attach(i)
-        try:
-            smtp_obj = SMTP(self.SMTP, self.PORT)
-            smtp_obj.connect(self.SMTP, self.PORT)
-            smtp_obj.login(self.USER, self.PW)
-            smtp_obj.sendmail(self.USER, self.TO_LIST, msgAlternative.as_string())
-            return True, "邮件发送成功"
-        except SMTPException as e:
-            return False, "邮件发送失败: {}".format(e)
+        if self.PORT == 25:
+            try:
+                smtp_obj = SMTP(self.SMTP, self.PORT)
+                smtp_obj.connect(self.SMTP, self.PORT)
+                smtp_obj.login(self.USER, self.PW)
+                smtp_obj.sendmail(self.USER, self.TO_LIST, msgAlternative.as_string())
+                smtp_obj.close()
+                return True, "邮件发送成功"
+            except SMTPException as e:
+                return False, "邮件发送失败: {}".format(e)
+        elif self.PORT == 465:
+            try:
+                smtp_obj = SMTP_SSL(self.SMTP, self.PORT)
+                smtp_obj.ehlo()
+                smtp_obj.login(self.USER, self.PW)
+                smtp_obj.sendmail(self.USER, self.TO_LIST, msgAlternative.as_string())
+                smtp_obj.close()
+                return True, "邮件发送成功"
+            except SMTPException as e:
+                return False, "邮件发送失败: {}".format(e)
 
 
 class EmailApi(object):
