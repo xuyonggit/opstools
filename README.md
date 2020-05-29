@@ -91,3 +91,25 @@ if __name__ == '__main__':
 ```
 ###### 效果图
 ![avatar](https://github.com/xuyonggit/opstools/blob/master/examples/image/emailapi.png)
+
+### 获取随机密码
+```python
+# -*- coding: utf-8 -*-
+from opstools.Base.password import MakePassword
+
+
+if __name__ == '__main__':
+    # 生成简单密码
+    print(MakePassword().getsamplepassword())
+    # 生成普通密码
+    print(MakePassword().getpassword())
+    # 生成困难密码
+    print(MakePassword().gethardpassword())
+
+```
+result:
+```text
+4kz709fo
+r48FY7qs6JCo
+ibq3]T1z<8I>zAv
+```
