@@ -106,10 +106,11 @@ class EmailTools(object):
             msg += """<caption> <h2> {} </h2></caption>""".format(title)
 
         head = data.pop(0)
-        msg += """<thead><tr>"""
-        for h in head:
-            msg += """<th>{}</th>""".format(h)
-        msg += """</tr></thead>"""
+        if head:
+            msg += """<thead><tr>"""
+            for h in head:
+                msg += """<th>{}</th>""".format(h)
+            msg += """</tr></thead>"""
 
         for i in data:
             msg += """<tr>"""
