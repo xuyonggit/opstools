@@ -76,10 +76,14 @@ if __name__ == '__main__':
     ea = EmailApi(CONFIG).apps['test1']
     # 添加文本
     ea.add_str('lalala')
+    # 添加加粗文本
+    ea.add_strong_str("我是加粗部分")
     # 添加图片
     ea.add_image("C:\\Users\\xu's\\PycharmProjects\\opstools\\examples\\123.jpg")
     # 添加表格
-    ea.add_table([['姓名', '年龄', '性别'], ['xuyong1', 25, '男']])
+    # 列表中得第一个列表为表头，不需要表头可留空，
+    # 可选参数：title 表格标题
+    ea.add_table([['姓名', '年龄', '性别'], ['xuyong1', 25, '男']], title='lalala')
     # 添加附件
     ea.add_attr("C:\\Users\\xu's\\PycharmProjects\\opstools\\examples\\wechat.py")
     status, res = ea.send_email()
