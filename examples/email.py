@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from opstools.email.tools.Coreapi import EmailApi
+from opstools2.email.tools.Coreapi import EmailApi
 CONFIG = {
     # 组 支持多个组
     '业务报警组': {
@@ -29,11 +29,11 @@ if __name__ == '__main__':
     # 添加文本
     ea.add_str('lalala')
     # 添加图片
-    ea.add_image("C:\\Users\\xu's\\PycharmProjects\\opstools\\examples\\123.jpg")
+    ea.add_image("C:\\Users\\xu's\\PycharmProjects\\opstools2\\examples\\123.jpg")
     # 添加表格
     ea.add_table([['姓名', '年龄', '性别'], ['xuyong1', 25, '男'], ['刘龙', 25, '男']])
     # 添加附件
-    ea.add_attr("C:\\Users\\xu's\\PycharmProjects\\opstools\\examples\\wechat.py")
+    ea.add_attr("C:\\Users\\xu's\\PycharmProjects\\opstools2\\examples\\wechat.py")
     status, res = ea.send_email()
     if status:
         print('success')

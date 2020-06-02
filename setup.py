@@ -11,9 +11,9 @@ with open('requirements.txt', 'r') as f:
         install_requires.append(req.strip())
 
 setup(
-    name='opstools',
+    name='opstools2',
     version=version,
-    description="opstools",
+    description="opstools2",
     requires=install_requires,
     author='xuyong',
     url='http://xuyongw.com',

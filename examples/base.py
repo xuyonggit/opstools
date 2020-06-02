@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-from opstools.Base.password import MakePassword
-
+from opstools2.Base.password import MakePassword
 
 if __name__ == '__main__':
     # 生成简单密码

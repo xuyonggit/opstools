@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from opstools.wechat.wechat_api import WechatApi
+from opstools2.wechat.wechat_api import WechatApi
 
 GLOBAL_WECHAR_CONFIG = {
         'NAME': '金山小额',

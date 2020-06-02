@@ -1,10 +1,10 @@
 # 运维工具库
 ### 安装
-pip install git+https://github.com/xuyonggit/opstools.git
+pip install git+https://github.com/xuyonggit/opstools2.git
 ### 封装mysql
 ```python
 #!/usr/bin/env python3
-from opstools.Base.mysql_api import BaseMysql
+from opstools2.Base.mysql_api import BaseMysql
 
 
 class TestMysql(BaseMysql):
@@ -26,7 +26,7 @@ if __name__ == '__main__':
 ```
 ### 封装企业微信接口
 ```python
-from opstools.wechat.wechat_api import WechatApi
+from opstools2.wechat.wechat_api import WechatApi
 
 GLOBAL_WECHAR_CONFIG = {
         'NAME': '金山小额',
@@ -57,7 +57,7 @@ if __name__ == '__main__':
 ### 封装发送邮件接口
 ```python
 # -*- coding: utf-8 -*-
-from opstools.email.tools.Coreapi import EmailApi
+from opstools2.email.tools.Coreapi import EmailApi
 CONFIG = {
     # 组
     'test1': {
@@ -79,13 +79,13 @@ if __name__ == '__main__':
     # 添加加粗文本
     ea.add_strong_str("我是加粗部分")
     # 添加图片
-    ea.add_image("C:\\Users\\xu's\\PycharmProjects\\opstools\\examples\\123.jpg")
+    ea.add_image("C:\\Users\\xu's\\PycharmProjects\\opstools2\\examples\\123.jpg")
     # 添加表格
     # 列表中得第一个列表为表头，不需要表头可留空，
     # 可选参数：title 表格标题
     ea.add_table([['姓名', '年龄', '性别'], ['xuyong1', 25, '男']], title='lalala')
     # 添加附件
-    ea.add_attr("C:\\Users\\xu's\\PycharmProjects\\opstools\\examples\\wechat.py")
+    ea.add_attr("C:\\Users\\xu's\\PycharmProjects\\opstools2\\examples\\wechat.py")
     status, res = ea.send_email()
     print(res)
 ```
@@ -95,7 +95,7 @@ if __name__ == '__main__':
 ### 获取随机密码
 ```python
 # -*- coding: utf-8 -*-
-from opstools.Base.password import MakePassword
+from opstools2.Base.password import MakePassword
 
 
 if __name__ == '__main__':
