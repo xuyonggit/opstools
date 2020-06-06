@@ -14,7 +14,7 @@ import os
 
 
 class EmailTools(object):
-    def __init__(self, subject, user, password, smtp,to_list, cc_list, alias, port):
+    def __init__(self, subject, user, password, smtp,to_list, cc_list, port):
         self.Subject = subject
         self.USER = user
         self.PW = password
@@ -22,7 +22,6 @@ class EmailTools(object):
         self.PORT = port
         self.TO_LIST = to_list
         self.CC_LIST = cc_list
-        self.ALIAS = alias if alias else self.USER.split('@')[0]
         self.init()
 
     def init(self):
@@ -143,7 +142,7 @@ class EmailTools(object):
 
     def send_email(self):
         msgAlternative = MIMEMultipart()
-        msgAlternative['From'] = "{} <{}>".format(Header(self.ALIAS,'utf-8').encode(), self.USER)
+        msgAlternative['From'] = self.USER
         msgAlternative['Subject'] = Header(self.Subject, 'utf-8')
         msgAlternative['To'] = Header(",".join(x for x in self.TO_LIST))
         if self.CC_LIST:
@@ -204,6 +203,5 @@ class EmailApi(object):
                 self.config[k]['smtp'],
                 self.config[k]['to_list'],
                 self.config[k]['cc_list'],
-                self.config[k]['alias'],
                 self.config[k]['port'],
             )
