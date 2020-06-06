@@ -145,7 +145,9 @@ class EmailTools(object):
         msgAlternative = MIMEMultipart()
         msgAlternative['From'] = "{} <{}>".format(Header(self.ALIAS,'utf-8').encode(), self.USER)
         msgAlternative['Subject'] = Header(self.Subject, 'utf-8')
-        msgAlternative['To'] = Header(";".join(x for x in self.TO_LIST))
+        msgAlternative['To'] = Header(",".join(x for x in self.TO_LIST))
+        if self.CC_LIST:
+            msgAlternative['Cc'] = Header(",".join(x for x in self.CC_LIST))
 
         #
         # 设定纯文本信息
@@ -168,7 +170,7 @@ class EmailTools(object):
                 smtp_obj = SMTP(self.SMTP, self.PORT)
                 smtp_obj.connect(self.SMTP, self.PORT)
                 smtp_obj.login(self.USER, self.PW)
-                smtp_obj.sendmail(self.USER, self.TO_LIST, msgAlternative.as_string())
+                smtp_obj.sendmail(self.USER, self.TO_LIST + self.CC_LIST, msgAlternative.as_string())
                 smtp_obj.close()
                 return True, "邮件发送成功"
             except SMTPException as e:
@@ -178,7 +180,7 @@ class EmailTools(object):
                 smtp_obj = SMTP_SSL(self.SMTP, self.PORT)
                 smtp_obj.ehlo()
                 smtp_obj.login(self.USER, self.PW)
-                smtp_obj.sendmail(self.USER, self.TO_LIST, msgAlternative.as_string())
+                smtp_obj.sendmail(self.USER, self.TO_LIST + self.CC_LIST, msgAlternative.as_string())
                 smtp_obj.close()
                 return True, "邮件发送成功"
             except SMTPException as e:
