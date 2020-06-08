@@ -50,7 +50,7 @@ class redisops(object):
         self.notallowkeys += ["^(\\*)+$", "^\\*.*\\*$"]
         for i in self.notallowkeys:
             if re.match(i, option):
-                raise Exception('Key match error: The key need not match: "^(\\*)+$", "^\\*.*\\*$", "{}"'.format('\", \"'.join(x for x in self.notallowkeys)))
+                raise Exception('Key match error: The key need not match: "{}"'.format('\", \"'.join(x for x in self.notallowkeys)))
         return option
 
     def getkeys(self, option):
@@ -105,5 +105,3 @@ class redisops(object):
                 break
         print("delete done, {} success, {} failed".format(count, fcount))
 
-    def test(self, option):
-        print(self.__check_option(option))
