@@ -1,6 +1,7 @@
 # 运维工具库
 ### 安装
 pip install git+https://github.com/xuyonggit/opstools2.git
+---
 ### 封装mysql
 ```python
 #!/usr/bin/env python3
@@ -24,6 +25,7 @@ if __name__ == '__main__':
     with Test as T:
         T.do_sql("update | insert ...")
 ```
+---
 ### 封装企业微信接口
 ```python
 from opstools2.wechat.wechat_api import WechatApi
@@ -54,6 +56,7 @@ if __name__ == '__main__':
     if not status:
         print(res)
 ```
+---
 ### 封装发送邮件接口
 ```python
 # -*- coding: utf-8 -*-
@@ -91,7 +94,7 @@ if __name__ == '__main__':
 ```
 ###### 效果图
 ![avatar](https://github.com/xuyonggit/opstools/blob/master/examples/image/emailapi.png)
-
+---
 ### 获取随机密码
 ```python
 # -*- coding: utf-8 -*-
@@ -112,4 +115,27 @@ result:
 4kz709fo
 r48FY7qs6JCo
 ibq3]T1z<8I>zAv
+```
+---
+### 封装redis批量操作keys
+根据模糊条件批量查询或者删除redis中的key  
+默认不允许查询：* 即所有key  
+**注意：该工具不建议在生产环境实施，如自行在生产环境操作，造成任何损失，作者不承担任何责任**
+```python
+# -*- coding: utf-8 -*-
+from opstools2.Redis.Api import redisops
+
+if __name__ == '__main__':
+    R = redisops(host='', port=6379, password='')   # password 可选
+    
+    # 增加用户自定义拒绝keys正则格式
+    R.deny(['^[a-z]'])
+
+    # 模糊批量查询keys
+    _count, _data = R.getkeys('session-*')
+    print(_count, _data)        # 数据量特别大时不建议操作返回值：_data
+    
+    # 模糊批量删除keys
+    R.delkeys('session-*', deltime=0.2)     # deltime 可选，删除间隔（单位：s)，默认0.1s
+
 ```
