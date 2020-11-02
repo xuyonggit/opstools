@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-from opstools2.Base.password import MakePassword
+from opstools2.Base.password import makepassword
 
 if __name__ == '__main__':
     # 生成简单密码
-    print(MakePassword().getsamplepassword())
+    print(makepassword.getsamplepassword())
     # 生成普通密码
-    print(MakePassword().getpassword())
+    print(makepassword.getpassword())
     # 生成困难密码
-    print(MakePassword().gethardpassword())
+    print(makepassword.gethardpassword())

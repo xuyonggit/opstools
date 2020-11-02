@@ -78,3 +78,6 @@ class MakePassword(object):
         other = num % 4
         listofpasswd = self._get_num(nums) + self._get_lword(lw) + self._get_bword(bw) + self._get_fuhao(fh) + self._get_lword(other)
         return self._make_pwd(listofpasswd)
+
+
+makepassword = MakePassword()

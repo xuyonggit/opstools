@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version = '1.1.3'
+version = '1.1.4'
 
 if not version:
     raise RuntimeError('Cannot find version information')
